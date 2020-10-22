@@ -1,14 +1,16 @@
 import React from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import ChampImage from "../mushroom-15x15.png";
-import { Champs, EventClickMap } from "../types/apiType";
+import { Champs, EventClickMap } from "../types/index.ts";
 
 export const ChampsMap = ({
   champs,
   onClick,
+  center,
 }: {
   champs: Champs[];
   onClick?: (e: EventClickMap) => void;
+  center: { lat: number; lng: number };
 }) => (
   <LoadScript
     libraries={["visualization"]}
@@ -18,7 +20,7 @@ export const ChampsMap = ({
       onClick={onClick}
       mapContainerStyle={{ height: "100%", width: "100%" }}
       zoom={13}
-      center={{ lat: 49.1707458, lng: 1.9994698 }}
+      center={center}
     >
       {champs.map((champ, index) => (
         <Marker icon={ChampImage} key={index} position={champ.position} />

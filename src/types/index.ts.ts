@@ -1,6 +1,11 @@
-export type ChampSpecies = "Cêpe" | "Girolle" | "Pied-bleu" | "Rosé";
-type Position = { lat: number; lng: number };
+export enum ChampSpecies {
+  CEPE = "Cêpe",
+  GIROLLE = "Girolle",
+  PIED_BLEU = "Pied-bleu",
+  ROSE = "Rosé",
+}
 
+type Position = { lat: number; lng: number };
 export type Champs = {
   specie: ChampSpecies;
   position: Position;

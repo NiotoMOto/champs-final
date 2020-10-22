@@ -6,62 +6,52 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { ChampSpecies } from "../types/apiType";
+import { ChampSpecies } from "../types/index.ts";
 import { MenuItem, Select } from "@material-ui/core";
 
-export default function FormDialog({
+export const AddChampDialog = ({
   onClose,
+  open,
 }: {
-  onClose: (champ: ChampSpecies) => void;
-}) {
-  const [open, setOpen] = useState(false);
-  const [champSepcie, setChampSpecie] = useState<ChampSpecies>("Cêpe");
+  onClose: (champ: ChampSpecies, save: boolean) => void;
+  open: boolean;
+}) => {
+  const [champSepcie, setChampSpecie] = useState<ChampSpecies>(
+    ChampSpecies.CEPE
+  );
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    onClose(champSepcie);
+  const handleClose = (save: boolean) => {
+    onClose(champSepcie, save);
   };
 
   return (
-    <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open form dialog
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
-          </DialogContentText>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={champSepcie}
-            onChange={(e: any) => setChampSpecie(e.target.value)}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Subscribe
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="form-dialog-title"
+    >
+      <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+      <DialogContent>
+        <DialogContentText>Epèce de champigon !</DialogContentText>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={champSepcie}
+          onChange={(e: any) => setChampSpecie(e.target.value)}
+        >
+          {Object.values(ChampSpecies).map((s) => (
+            <MenuItem value={s}>{s}</MenuItem>
+          ))}
+        </Select>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => handleClose(false)} color="primary">
+          Cancel
+        </Button>
+        <Button onClick={() => handleClose(true)} color="primary">
+          Enregistrer
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
-}
+};

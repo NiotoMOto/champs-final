@@ -3,23 +3,32 @@ import React, { useState } from "react";
 import { ChampBar } from "../components/ChampBar";
 import { ChampList } from "../components/ChampList";
 import { ChampsMap } from "../components/ChampMap";
-import { Champs } from "../types/apiType";
+import { Champs, ChampSpecies } from "../types/index.ts";
+import { AddChampDialog } from "../components/AddChampDialog";
+
+const defaultCenter = { lat: 49.1707458, lng: 1.9994698 };
 
 export const Home = () => {
+  const [openChampDialog, setOpenChampDialog] = useState(false);
+  const [position, setPosition] = useState(defaultCenter);
   const [champs, setChamps] = useState<Champs[]>([
     {
-      specie: "Cêpe",
+      specie: ChampSpecies.CEPE,
       position: { lat: 49.1707458, lng: 1.9994698 },
     },
     {
-      specie: "Girolle",
+      specie: ChampSpecies.GIROLLE,
       position: { lat: 49.1707458, lng: 1.9994698 },
     },
     {
-      specie: "Rosé",
+      specie: ChampSpecies.PIED_BLEU,
       position: { lat: 49.1709, lng: 1.9994698 },
     },
   ]);
+
+  const saveChamp = (champ: Champs) => {
+    setChamps([...champs, champ]);
+  };
 
   return (
     <>
@@ -29,14 +38,10 @@ export const Home = () => {
           <Grid xs={8} item>
             <div style={{ height: "100%", width: "100%" }}>
               <ChampsMap
+                center={defaultCenter}
                 onClick={(e) => {
-                  setChamps([
-                    ...champs,
-                    {
-                      specie: "Pied-bleu",
-                      position: { lat: e.latLng.lat(), lng: e.latLng.lng() },
-                    },
-                  ]);
+                  setOpenChampDialog(true);
+                  setPosition({ lat: e.latLng.lat(), lng: e.latLng.lng() });
                 }}
                 champs={champs}
               />
@@ -47,6 +52,18 @@ export const Home = () => {
           </Grid>
         </Grid>
       </Container>
+      <AddChampDialog
+        open={openChampDialog}
+        onClose={(s, save) => {
+          if (save) {
+            saveChamp({
+              position,
+              specie: s,
+            });
+          }
+          setOpenChampDialog(false);
+        }}
+      />
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { List, ListItem } from "@material-ui/core";
 import React from "react";
-import { Champs } from "../types/apiType";
+import { Champs } from "../types/index.ts";
 
 export const ChampList = ({ champs }: { champs: Champs[] }) => (
   <List aria-label="champs list">

@@ -4,8 +4,8 @@ import { Champs } from "../types/index.ts";
 
 export const ChampList = ({ champs }: { champs: Champs[] }) => (
   <List aria-label="champs list">
-    {champs.map((champ) => (
-      <ListItem>{champ.specie}</ListItem>
+    {champs.map((champ, index) => (
+      <ListItem key={index}>{champ.specie}</ListItem>
     ))}
   </List>
 );

@@ -12,10 +12,7 @@ export const ChampsMap = ({
   onClick?: (e: EventClickMap) => void;
   center: { lat: number; lng: number };
 }) => (
-  <LoadScript
-    libraries={["visualization"]}
-    googleMapsApiKey="AIzaSyDGt9y_yhWZOomFemdI4cNj_AifW_CLXnc"
-  >
+  <LoadScript googleMapsApiKey="AIzaSyDGt9y_yhWZOomFemdI4cNj_AifW_CLXnc">
     <GoogleMap
       onClick={onClick}
       mapContainerStyle={{ height: "100%", width: "100%" }}
@@ -23,7 +20,7 @@ export const ChampsMap = ({
       center={center}
     >
       {champs.map((champ, index) => (
-        <Marker icon={ChampImage} key={index} position={champ.position} />
+        <Marker key={index} icon={ChampImage} position={champ.position} />
       ))}
     </GoogleMap>
   </LoadScript>

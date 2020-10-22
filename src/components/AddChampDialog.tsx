@@ -1,5 +1,4 @@
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import React, { useState } from "react";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -30,7 +29,7 @@ export const AddChampDialog = ({
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+      <DialogTitle id="form-dialog-title">Ajout champignon</DialogTitle>
       <DialogContent>
         <DialogContentText>Epèce de champigon !</DialogContentText>
         <Select
@@ -40,7 +39,9 @@ export const AddChampDialog = ({
           onChange={(e: any) => setChampSpecie(e.target.value)}
         >
           {Object.values(ChampSpecies).map((s) => (
-            <MenuItem value={s}>{s}</MenuItem>
+            <MenuItem key={s} value={s}>
+              {s}
+            </MenuItem>
           ))}
         </Select>
       </DialogContent>

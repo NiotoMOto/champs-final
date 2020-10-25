@@ -1,7 +1,7 @@
 import React from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import ChampImage from "../mushroom-15x15.png";
-import { Champs, EventClickMap } from "../types/index.ts";
+import { Champs, EventClickMap } from "../types";
 
 export const ChampsMap = ({
   champs,

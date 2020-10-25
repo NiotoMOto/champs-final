@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ChampBar } from "../components/ChampBar";
 import { ChampList } from "../components/ChampList";
 import { ChampsMap } from "../components/ChampMap";
-import { Champs, ChampSpecies } from "../types/index.ts";
+import { Champs, ChampSpecies } from "../types";
 import { AddChampDialog } from "../components/AddChampDialog";
 
 const defaultCenter = { lat: 49.1707458, lng: 1.9994698 };

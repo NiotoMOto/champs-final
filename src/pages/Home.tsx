@@ -1,34 +1,32 @@
 import { Container, Grid } from "@material-ui/core";
-import React, { useState } from "react";
+import * as firebase from "firebase";
+import React, { useEffect, useState } from "react";
 import { ChampBar } from "../components/ChampBar";
 import { ChampList } from "../components/ChampList";
 import { ChampsMap } from "../components/ChampMap";
 import { Champs, ChampSpecies } from "../types";
 import { AddChampDialog } from "../components/AddChampDialog";
+import { champsCollection, db } from "../firebase";
 
 const defaultCenter = { lat: 49.1707458, lng: 1.9994698 };
 
 export const Home = () => {
   const [openChampDialog, setOpenChampDialog] = useState(false);
-  const [position, setPosition] = useState(defaultCenter);
-  const [champs, setChamps] = useState<Champs[]>([
-    {
-      specie: ChampSpecies.CEPE,
-      position: { lat: 49.1707458, lng: 1.9994698 },
-    },
-    {
-      specie: ChampSpecies.GIROLLE,
-      position: { lat: 49.1707458, lng: 1.9994698 },
-    },
-    {
-      specie: ChampSpecies.PIED_BLEU,
-      position: { lat: 49.1709, lng: 1.9994698 },
-    },
-  ]);
+  const [position, setPosition] = useState<firebase.firestore.GeoPoint>();
+  const [champs, setChamps] = useState<Champs[]>([]);
 
   const saveChamp = (champ: Champs) => {
-    setChamps([...champs, champ]);
+    champsCollection.add(champ);
   };
+
+  const getChamps = async () => {
+    const champs = await champsCollection.get();
+    setChamps(champs.docs.map((d) => d.data()));
+  };
+
+  useEffect(() => {
+    getChamps();
+  }, []);
 
   return (
     <>
@@ -41,7 +39,12 @@ export const Home = () => {
                 center={defaultCenter}
                 onClick={(e) => {
                   setOpenChampDialog(true);
-                  setPosition({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+                  setPosition(
+                    new firebase.firestore.GeoPoint(
+                      e.latLng.lat(),
+                      e.latLng.lng()
+                    )
+                  );
                 }}
                 champs={champs}
               />
@@ -55,7 +58,7 @@ export const Home = () => {
       <AddChampDialog
         open={openChampDialog}
         onClose={(s, save) => {
-          if (save) {
+          if (save && position) {
             saveChamp({
               position,
               specie: s,

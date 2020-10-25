@@ -20,7 +20,14 @@ export const ChampsMap = ({
       center={center}
     >
       {champs.map((champ, index) => (
-        <Marker key={index} icon={ChampImage} position={champ.position} />
+        <Marker
+          key={index}
+          icon={ChampImage}
+          position={{
+            lat: champ.position.latitude,
+            lng: champ.position.longitude,
+          }}
+        />
       ))}
     </GoogleMap>
   </LoadScript>

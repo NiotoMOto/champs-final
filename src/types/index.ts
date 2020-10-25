@@ -5,7 +5,7 @@ export enum ChampSpecies {
   ROSE = "Rosé",
 }
 
-type Position = { lat: number; lng: number };
+export type Position = firebase.firestore.GeoPoint;
 export type Champs = {
   specie: ChampSpecies;
   position: Position;

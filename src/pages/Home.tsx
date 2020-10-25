@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import { ChampBar } from "../components/ChampBar";
 import { ChampList } from "../components/ChampList";
 import { ChampsMap } from "../components/ChampMap";
-import { Champs, ChampSpecies } from "../types";
+import { Champs } from "../types";
 import { AddChampDialog } from "../components/AddChampDialog";
-import { champsCollection, db } from "../firebase";
+import { champsCollection } from "../firebase";
 
 const defaultCenter = { lat: 49.1707458, lng: 1.9994698 };
 

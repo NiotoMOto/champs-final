@@ -19,13 +19,18 @@ export const Home = () => {
     champsCollection.add(champ);
   };
 
-  const getChamps = async () => {
-    const champs = await champsCollection.get();
-    setChamps(champs.docs.map((d) => d.data()));
+  const getChamps = () => {
+    return champsCollection.onSnapshot((champs) => {
+      setChamps(champs.docs.map((d) => d.data()));
+    });
   };
 
   useEffect(() => {
-    getChamps();
+    const unsubscribe = getChamps();
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   return (
